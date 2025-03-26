@@ -47,9 +47,14 @@ fn generate_bindings(defs: Vec<&str>, headerpaths: Vec<PathBuf>) {
 
     let out_path = PathBuf::from(env::var_os("OUT_DIR").unwrap());
 
+    // Generate the bindings and write them to file.
     bindings
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Could not write bindings");
+
+    // Read the generated bindings code.
+    // let code =
+    //     fs::read_to_string(&out_path).expect("Unable to read bindings file");
 }
 
 #[cfg(not(feature = "bindgen"))]

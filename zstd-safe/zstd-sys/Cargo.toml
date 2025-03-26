@@ -51,6 +51,9 @@ features = ["experimental"]
 [lib]
 doctest = false  # Documentation is for C code, good luck testing that.
 
+[build-dependencies]
+regex = "1.11.1"
+
 [build-dependencies.bindgen]
 optional = true
 version = "0.71"

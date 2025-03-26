@@ -1,0 +1,3 @@
+[submodule "zstd-safe/zstd-sys/zstd"]
+	path = zstd-safe/zstd-sys/zstd
+	url = ssh://git@github.com/CodeEditorLand/ZSTD.git

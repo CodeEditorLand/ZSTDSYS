@@ -1,5 +1,7 @@
 use std::ffi::OsStr;
+
 use std::path::{Path, PathBuf};
+
 use std::{env, fmt, fs};
 
 #[cfg(feature = "bindgen")]
@@ -44,6 +46,7 @@ fn generate_bindings(defs: Vec<&str>, headerpaths: Vec<PathBuf>) {
     let bindings = bindings.generate().expect("Unable to generate bindings");
 
     let out_path = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+
     bindings
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Could not write bindings");
@@ -58,6 +61,7 @@ fn pkg_config() -> (Vec<&'static str>, Vec<PathBuf>) {
         .cargo_metadata(!cfg!(feature = "non-cargo"))
         .probe("libzstd")
         .expect("Can't probe for zstd in pkg-config");
+
     (vec!["PKG_CONFIG"], library.include_paths)
 }
 
@@ -67,6 +71,7 @@ fn set_legacy(_config: &mut cc::Build) {}
 #[cfg(feature = "legacy")]
 fn set_legacy(config: &mut cc::Build) {
     config.define("ZSTD_LEGACY_SUPPORT", Some("1"));
+
     config.include("zstd/lib/legacy");
 }
 
@@ -131,6 +136,7 @@ fn compile_zstd() {
                 }
             })
             .collect();
+
         entries.sort();
 
         config.files(entries);
@@ -156,6 +162,7 @@ fn compile_zstd() {
 
     if need_wasm_shim {
         cargo_print(&"rerun-if-changed=wasm-shim/stdlib.h");
+
         cargo_print(&"rerun-if-changed=wasm-shim/string.h");
 
         config.include("wasm-shim/");
@@ -163,7 +170,9 @@ fn compile_zstd() {
 
     // Some extra parameters
     config.include("zstd/lib/");
+
     config.include("zstd/lib/common");
+
     config.warnings(false);
 
     config.define("ZSTD_LIB_DEPRECATED", Some("0"));
@@ -211,10 +220,14 @@ fn compile_zstd() {
     // so we can be used with another zstd-linking lib.
     // See https://github.com/gyscos/zstd-rs/issues/58
     config.flag("-fvisibility=hidden");
+
     config.define("XXH_PRIVATE_API", Some(""));
+
     config.define("ZSTDLIB_VISIBILITY", Some(""));
+
     #[cfg(feature = "zdict_builder")]
     config.define("ZDICTLIB_VISIBILITY", Some(""));
+
     config.define("ZSTDERRORLIB_VISIBILITY", Some(""));
 
     // https://github.com/facebook/zstd/blob/d69d08ed6c83563b57d98132e1e3f2487880781e/lib/common/debug.h#L60
@@ -234,21 +247,30 @@ fn compile_zstd() {
     }
 
     set_pthread(&mut config);
+
     set_legacy(&mut config);
+
     enable_threading(&mut config);
 
     // Compile!
     config.compile("libzstd.a");
 
     let src = env::current_dir().unwrap().join("zstd").join("lib");
+
     let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+
     let include = dst.join("include");
+
     fs::create_dir_all(&include).unwrap();
+
     fs::copy(src.join("zstd.h"), include.join("zstd.h")).unwrap();
+
     fs::copy(src.join("zstd_errors.h"), include.join("zstd_errors.h"))
         .unwrap();
+
     #[cfg(feature = "zdict_builder")]
     fs::copy(src.join("zdict.h"), include.join("zdict.h")).unwrap();
+
     cargo_print(&format_args!("root={}", dst.display()));
 }
 
@@ -266,6 +288,7 @@ fn main() {
 
     let target_arch =
         std::env::var("CARGO_CFG_TARGET_ARCH").unwrap_or_default();
+
     let target_os = std::env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
 
     if target_arch == "wasm32" || target_os == "hermit" {
@@ -273,6 +296,7 @@ fn main() {
     }
 
     // println!("cargo:rustc-link-lib=zstd");
+
     let (defs, headerpaths) = if cfg!(feature = "pkg-config")
         || env::var_os("ZSTD_SYS_USE_PKG_CONFIG").is_some()
     {
@@ -288,6 +312,7 @@ fn main() {
         );
 
         compile_zstd();
+
         (vec![], vec![manifest_dir.join("zstd/lib")])
     };
 
@@ -295,6 +320,7 @@ fn main() {
         .iter()
         .map(|p| p.display().to_string())
         .collect();
+
     cargo_print(&format_args!("include={}", includes.join(";")));
 
     generate_bindings(defs, headerpaths);

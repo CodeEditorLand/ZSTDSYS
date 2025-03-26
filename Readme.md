@@ -8,7 +8,6 @@
 [![Build on macOS](https://github.com/gyscos/zstd-rs/actions/workflows/macos.yml/badge.svg)](https://github.com/gyscos/zstd-rs/actions/workflows/macos.yml)
 [![Build on wasm](https://github.com/gyscos/zstd-rs/actions/workflows/wasm.yml/badge.svg)](https://github.com/gyscos/zstd-rs/actions/workflows/wasm.yml)
 
-
 This library is a rust binding for the [zstd compression library][zstd].
 
 # [Documentation][doc]
@@ -57,8 +56,8 @@ fn decompress() {
 # Asynchronous support
 
 The [`async-compression`](https://github.com/Nemo157/async-compression/) crate
-provides an async-ready integration of various compression algorithms,
-including `zstd-rs`.
+provides an async-ready integration of various compression algorithms, including
+`zstd-rs`.
 
 # Compile it yourself
 
@@ -68,20 +67,20 @@ including `zstd-rs`.
 git clone https://github.com/gyscos/zstd-rs --recursive
 ```
 
-Or, if you cloned it without the `--recursive` flag,
-call this from inside the repository:
+Or, if you cloned it without the `--recursive` flag, call this from inside the
+repository:
 
 ```
 git submodule update --init
 ```
 
-Then, running `cargo build` should take care
-of building the C library and linking to it.
+Then, running `cargo build` should take care of building the C library and
+linking to it.
 
 # Build-time bindgen
 
-This library includes a pre-generated `bindings.rs` file.
-You can also generate new bindings at build-time, using the `bindgen` feature:
+This library includes a pre-generated `bindings.rs` file. You can also generate
+new bindings at build-time, using the `bindgen` feature:
 
 ```
 cargo build --features bindgen
@@ -89,7 +88,7 @@ cargo build --features bindgen
 
 # TODO
 
-* Benchmarks, optimizations, ...
+- Benchmarks, optimizations, ...
 
 # Disclaimer
 
@@ -97,8 +96,8 @@ This implementation is largely inspired by bozaro's [lz4-rs].
 
 # License
 
-* The zstd C library is under a dual BSD/GPLv2 license.
-* This zstd-rs binding library is under a [MIT](LICENSE) license.
+- The zstd C library is under a dual BSD/GPLv2 license.
+- This zstd-rs binding library is under a [MIT](LICENSE) license.
 
 [zstd]: https://github.com/facebook/zstd
 [lz4-rs]: https://github.com/bozaro/lz4-rs

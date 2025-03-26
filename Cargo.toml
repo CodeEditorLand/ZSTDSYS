@@ -20,10 +20,12 @@ features = ["experimental", "zstdmt", "zdict_builder", "doc-cfg"]
 travis-ci = { repository = "gyscos/zstd-rs" }
 
 [dependencies]
-zstd-safe = { path = "zstd-safe", version = "7.1.0", default-features = false, features = ["std"] }
+zstd-safe = { path = "zstd-safe", version = "7.1.0", default-features = false, features = [
+	"std",
+] }
 
 [dev-dependencies]
-clap = {version = "4.0", features=["derive"]}
+clap = { version = "4.0", features = ["derive"] }
 humansize = "2.0"
 partial-io = "0.5"
 walkdir = "2.2"

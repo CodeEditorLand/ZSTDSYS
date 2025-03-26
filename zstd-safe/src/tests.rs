@@ -220,8 +220,7 @@ fn test_seekable_seek_table() {
         .unwrap();
 
     // Try to create a seek table from the seekable
-    let seek_table =
-        { SeekTable::try_from_seekable(&seekable).unwrap() };
+    let seek_table = { SeekTable::try_from_seekable(&seekable).unwrap() };
 
     // Seekable and seek table should return the same results
     assert_eq!(seekable.num_frames(), seek_table.num_frames());

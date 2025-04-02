@@ -7,10 +7,10 @@ zstd-safe = { path = "zstd-safe", version = "7.1.0", default-features = false, f
 ] }
 
 [dev-dependencies]
-clap = { version = "4.0", features = ["derive"] }
-humansize = "2.0"
+clap = { version = "4.5", features = ["derive"] }
+humansize = "2.1"
 partial-io = "0.5"
-walkdir = "2.2"
+walkdir = "2.5"
 
 [[example]]
 name = "train"

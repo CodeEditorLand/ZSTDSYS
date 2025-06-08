@@ -69,7 +69,7 @@ links = "zstd"
 name = "zstd-sys"
 readme = "Readme.md"
 repository = "https://github.com/gyscos/zstd-rs"
-rust-version = "1.64"
+rust-version = "1.89.0"
 version = "2.0.15+zstd.1.5.7"
 
 [package.metadata]

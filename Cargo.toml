@@ -48,7 +48,7 @@ license = "MIT"
 name = "zstd"
 readme = "Readme.md"
 repository = "https://github.com/gyscos/zstd-rs"
-rust-version = "1.64"
+rust-version = "1.89.0"
 version = "0.13.3"
 
 [package.metadata]
